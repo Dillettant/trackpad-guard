@@ -1,6 +1,6 @@
 cask "trackpad-guard" do
   version "1.0.0"
-  sha256 "PLACEHOLDER"
+  sha256 "2d33b082bad984b441209c1277c62c55eda1fcd1ad5d7eecc0e8d8d83b340335"
 
   url "https://github.com/Dillettant/trackpad-guard/releases/download/v#{version}/TrackpadGuard-#{version}.dmg"
   name "TrackpadGuard"
