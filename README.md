@@ -8,7 +8,28 @@ TrackpadGuard uses macOS `CGEventTap` to:
 1. Monitor keyboard events (listen-only)
 2. Suppress trackpad events (movement, scroll, clicks) for a short window after each keystroke
 
-When you stop typing, the trackpad re-enables after the timeout (default: 400ms).
+When you stop typing, the trackpad re-enables after the timeout (default: 400ms). Runs as a menu bar app — no dock icon.
+
+## Install
+
+### Homebrew
+
+```bash
+brew install --cask --no-quarantine Dillettant/tap/trackpad-guard
+```
+
+### DMG
+
+Download the latest DMG from [Releases](https://github.com/Dillettant/trackpad-guard/releases), open it, and drag TrackpadGuard to Applications.
+
+### Build from source
+
+```bash
+git clone https://github.com/Dillettant/trackpad-guard.git
+cd trackpad-guard
+./build-app.sh
+cp -r build/TrackpadGuard.app /Applications/
+```
 
 ## Requirements
 
@@ -16,66 +37,15 @@ When you stop typing, the trackpad re-enables after the timeout (default: 400ms)
 - **Accessibility permission** — the app will prompt you on first run. Grant access in:
   System Settings → Privacy & Security → Accessibility
 
-## Build & Install
-
-```bash
-swift build -c release
-# Binary is at .build/release/trackpad-guard
-
-# Optional: copy to PATH
-cp .build/release/trackpad-guard /usr/local/bin/
-```
-
 ## Usage
 
-```bash
-# Run with defaults (400ms timeout)
-trackpad-guard
+Launch TrackpadGuard from Applications. It appears in the **menu bar** with a hand icon.
 
-# Custom timeout
-trackpad-guard --timeout 0.5
-
-# Only suppress movement, allow clicks
-trackpad-guard --no-clicks
-
-# Debug mode
-trackpad-guard --verbose
-```
-
-### Options
-
-| Flag | Description | Default |
-|------|-------------|---------|
-| `-t`, `--timeout` | Seconds to suppress trackpad after last keystroke | `0.4` |
-| `--no-clicks` | Only suppress movement/scroll, allow clicks | off |
-| `-v`, `--verbose` | Print debug output | off |
-
-## Run at Login
-
-Create a Launch Agent to start automatically:
-
-```bash
-cat > ~/Library/LaunchAgents/com.trackpadguard.plist << 'EOF'
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-    <key>Label</key>
-    <string>com.trackpadguard</string>
-    <key>ProgramArguments</key>
-    <array>
-        <string>/usr/local/bin/trackpad-guard</string>
-    </array>
-    <key>RunAtLoad</key>
-    <true/>
-    <key>KeepAlive</key>
-    <true/>
-</dict>
-</plist>
-EOF
-
-launchctl load ~/Library/LaunchAgents/com.trackpadguard.plist
-```
+From the menu bar you can:
+- **Toggle** guard on/off
+- **Change timeout** (200ms–1000ms)
+- **Toggle click suppression**
+- **Quit**
 
 ## License
 
